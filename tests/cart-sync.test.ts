@@ -19,7 +19,7 @@ describe("syncItem", () => {
       config: { length: 3, opening: "center", mount: "ceiling", control: "remote", rows: 1, region: "bishkek" },
     };
     const next = syncItem(item);
-    expect(next.unitPrice).toBe(19_000);
+    expect(next.unitPrice).toBe(18_000);
     expect(next.title).toEqual(kit.title);
     expect(next.gone).toBeUndefined();
   });

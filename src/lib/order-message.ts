@@ -4,6 +4,9 @@ import type { Locale } from "../i18n";
 import type { CartItem, KitConfig } from "./cart";
 import { orderStrings, openings, mounts, controls, regions, shapes, fabrics, type Shape, type Fabric, type ReceiveMethod } from "../i18n/pages/order";
 import { formatMeters, formatNumber } from "./format";
+import { cartTotals } from "./cart-totals";
+
+export { cartTotals, cornicesCount } from "./cart-totals";
 
 /** Конфигурация комплекта из калькулятора: форма и ткань сверх KitConfig корзины. */
 export type KitConfigX = KitConfig & { shape?: Shape; fabric?: Fabric };
@@ -39,12 +42,6 @@ export type OrderMessageInput = {
   name?: string;
 };
 
-export function cartTotals(items: CartItem[]) {
-  const total = items.reduce((s, i) => s + (i.unitPrice ?? 0) * i.qty, 0);
-  const hasUnknown = items.some((i) => i.unitPrice == null);
-  return { total, hasUnknown };
-}
-
 /** Сообщение о заказе. Без адреса и комментария: длинная ссылка wa.me ломается в некоторых браузерах. */
 export function buildOrderMessage({ locale, number, items, method, city, name }: OrderMessageInput): string {
   const s = orderStrings[locale];
@@ -56,8 +53,10 @@ export function buildOrderMessage({ locale, number, items, method, city, name }:
     // Профиль и ремень — метрами: «× 3 м», а не «× 3» (читается как штуки).
     lines.push(`${n + 1}. ${title}${cfg} × ${i.qty}${i.unit === "m" ? ` ${s.cart.meters}` : ""} — ${price}`);
   });
-  const { total, hasUnknown } = cartTotals(items);
+  const { discount, total, hasUnknown } = cartTotals(items);
   lines.push("");
+  // Одна строка про скидку: ссылка wa.me с длинным текстом ломается в некоторых браузерах.
+  if (discount > 0) lines.push(`${s.msg.discount}: −${som(discount)}`);
   if (total > 0) lines.push(`${s.msg.total}: ${som(total)}${hasUnknown ? ` ${s.msg.plusUnknown}` : ""}`);
   else lines.push(`${s.msg.total}: ${s.msg.unknown}`);
   if (method) lines.push(`${s.msg.receive}: ${s.checkout.methods[method].t}${city ? `, ${city}` : ""}`);
@@ -72,6 +71,8 @@ export type CalcMessageInput = {
   model?: string;
   windows: number;
   price: number | null;
+  /** Скидка за количество карнизов, уже вычтена из price. */
+  discount?: number;
   over?: boolean;
   /** Параметры без цены (ширина окна, управление, регион) — для типов «по расчёту». */
   details?: string[];
@@ -79,7 +80,7 @@ export type CalcMessageInput = {
 };
 
 /** Текст расчёта или заявки «по расчёту» из калькулятора. */
-export function buildCalcMessage({ locale, typeLabel, config, model, windows, price, over, details, url }: CalcMessageInput): string {
+export function buildCalcMessage({ locale, typeLabel, config, model, windows, price, discount = 0, over, details, url }: CalcMessageInput): string {
   const s = orderStrings[locale];
   const head = price != null && !over ? s.msg.calc : s.msg.ask;
   const parts = [typeLabel];
@@ -89,7 +90,10 @@ export function buildCalcMessage({ locale, typeLabel, config, model, windows, pr
   if (windows > 1) parts.push(s.msg.windows(windows));
   const lines = [`${s.msg.hello} ${head}`, parts.join(", ")];
   if (over) lines.push(s.msg.over);
-  else if (price != null) lines.push(`${s.msg.total}: ${som(price)}`);
+  else if (price != null) {
+    if (discount > 0) lines.push(`${s.msg.discount}: −${som(discount)}`);
+    lines.push(`${s.msg.total}: ${som(price)}`);
+  }
   if (url) lines.push(`${s.msg.link}: ${url}`);
   return lines.join("\n");
 }

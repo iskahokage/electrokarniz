@@ -44,7 +44,29 @@ describe("buildOrderMessage", () => {
 
 describe("cartTotals", () => {
   it("складывает известные цены и отмечает неизвестные", () => {
-    expect(cartTotals([kit, remote])).toEqual({ total: 39200, hasUnknown: true });
+    expect(cartTotals([kit, remote])).toEqual({ subtotal: 39200, discount: 0, total: 39200, cornices: 2, hasUnknown: true });
+  });
+  it("от 4 карнизов — скидка 10 % на весь заказ, включая штучные товары", () => {
+    const priced: CartItem = { ...remote, unitPrice: 2000 };
+    const t = cartTotals([{ ...kit, qty: 4 }, priced]);
+    expect(t.cornices).toBe(4);
+    expect(t.subtotal).toBe(78400 + 2000);
+    expect(t.discount).toBe(8040);
+    expect(t.total).toBe(80400 - 8040);
+  });
+  it("двухрядный карниз считается как два", () => {
+    const twoRows: CartItem = { ...kit, config: { ...kit.config!, rows: 2 } };
+    expect(cartTotals([twoRows]).cornices).toBe(4);
+    expect(cartTotals([{ ...twoRows, qty: 1 }]).discount).toBe(0);
+  });
+  it("3 карниза — без скидки", () => {
+    expect(cartTotals([{ ...kit, qty: 3 }]).discount).toBe(0);
+  });
+  it("сообщение показывает сумму, скидку и итог", () => {
+    const text = buildOrderMessage({ locale: "ru", number: "EK-9", items: [{ ...kit, qty: 4 }] });
+    expect(text).toContain("Скидка 10");
+    expect(text).toContain(`−${formatNumber(7840)} сом`);
+    expect(text).toContain(`${formatNumber(70560)} сом`);
   });
 });
 
@@ -56,6 +78,11 @@ describe("configSummary и buildCalcMessage", () => {
     const text = buildCalcMessage({ locale: "ru", typeLabel: "Раздвижной электрокарниз", config: kit.config, model: "Novo N21 Wi-Fi", windows: 1, price: 19600 });
     expect(text).toContain(`${formatNumber(19600)} сом`);
     expect(text).toContain("Novo N21 Wi-Fi");
+  });
+  it("расчёт со скидкой показывает её отдельной строкой", () => {
+    const text = buildCalcMessage({ locale: "ru", typeLabel: "Раздвижной электрокарниз", config: kit.config, windows: 4, price: 70560, discount: 7840 });
+    expect(text).toContain(`−${formatNumber(7840)} сом`);
+    expect(text).toContain(`${formatNumber(70560)} сом`);
   });
   it("больше 12 м — без цены, с просьбой посчитать", () => {
     const text = buildCalcMessage({ locale: "ru", typeLabel: "Раздвижной электрокарниз", windows: 1, price: 46000, over: true });

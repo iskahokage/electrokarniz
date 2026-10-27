@@ -22,7 +22,7 @@ export const site = {
     replyMinutes: 15,
     installDaysBishkek: 1,
     orderDays: "15–20",
-    warrantyYears: 3,
+    warrantyYears: 5, // владелец, 27.10.2026: на моторы обеих марок, было 3
     prepaymentPercent: 50,
   },
   installRegions: {

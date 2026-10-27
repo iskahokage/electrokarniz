@@ -67,8 +67,8 @@ const logoRail = `<svg xmlns="http://www.w3.org/2000/svg" width="${logo.w}" heig
 
 // Две версии: кыргызские страницы при отправке ссылки показывают кыргызский текст (черновик — владелец проверяет).
 const OG = [
-  { file: "public/og/default.png", h1: ["Электрокарнизы", "в Бишкеке"], lead: "Установка за 1 день · гарантия 3 года" },
-  { file: "public/og/default-ky.png", h1: ["Бишкекте", "электрокарниздер"], size: 86, lead: "1 күндө орнотуу · 3 жылдык кепилдик" },
+  { file: "public/og/default.png", h1: ["Электрокарнизы", "в Бишкеке"], lead: "Установка за 1 день · гарантия 5 лет" },
+  { file: "public/og/default-ky.png", h1: ["Бишкекте", "электрокарниздер"], size: 86, lead: "1 күндө орнотуу · 5 жылдык кепилдик" },
 ];
 const data = await text("electrokarniz.kg   +996 771 425 492", { font: "mono", family: "Monospace", weight: "Regular", size: 24, color: C.ink3 });
 const top = 250;

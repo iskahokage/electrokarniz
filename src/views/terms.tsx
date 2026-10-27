@@ -9,7 +9,7 @@ export function meta(locale: Locale) {
   return buildMeta({ locale, path: "/usloviya/", title: s.metaTitle, description: s.metaDescription });
 }
 
-// ЧЕРНОВИК (draft: true): до проверки владельцем и юристом. Возврат — «по договорённости» (У16 без ответа).
+// ЧЕРНОВИК (draft: true): до проверки владельцем и юристом. Возврат: проданный товар возврату не подлежит (У16, 27.10.2026).
 export const draft = true;
 
 export default function View({ locale }: { locale: Locale; params: Record<string, never> }) {

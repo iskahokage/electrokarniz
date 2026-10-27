@@ -10,12 +10,13 @@ import { WindowScheme } from "@/components/window-scheme";
 import { SomSign } from "@/components/price";
 import { CalcPreview } from "./preview";
 import { useReached } from "./use-reached";
+import { setOwnSticky } from "@/lib/own-sticky";
 import { brands } from "@/content/brands";
 import { solutionImages } from "@/content/solution-images";
 import type { Ecosystem, Product } from "@/content/types";
 import { DEFAULTS, MAX_INPUT, MAX_WINDOWS, fromQuery, kits, parseStored, toQuery, type CalcState } from "./calc-state";
 import { cart, kitId, type KitConfig } from "@/lib/cart";
-import { cornicePrice, PRICING } from "@/lib/pricing";
+import { cornicePrice, orderDiscount, PRICING } from "@/lib/pricing";
 import { formatMeters, formatNumber } from "@/lib/format";
 import { waLink } from "@/lib/whatsapp";
 import { track } from "@/lib/track";
@@ -166,7 +167,10 @@ function CalcApp({ locale, search, live }: { locale: Locale; search: URLSearchPa
     fabric: fabrics[st.f],
   };
   const unit = product && product.price.base != null ? cornicePrice({ length: len, rows: config.rows, base: product.price.base, perMeter: product.price.perMeter }) : null;
-  const total = unit == null ? null : unit * st.w;
+  // Скидка от 4 карнизов: окна × ряды (два ряда — два карниза).
+  const gross = unit == null ? null : unit * st.w;
+  const discount = gross == null ? 0 : orderDiscount(gross, st.w * config.rows);
+  const total = gross == null ? null : gross - discount;
   const showPrice = priced && !over;
 
   const typeLabel = s.typeOpts[st.type];
@@ -181,6 +185,7 @@ function CalcApp({ locale, search, live }: { locale: Locale; search: URLSearchPa
     details: priced ? undefined : [`${s.width.toLowerCase()} ${formatMeters(st.l, locale)}`, controlLabel, s.regionOpts[st.rg]],
     windows: st.w,
     price: showPrice ? total : null,
+    discount: showPrice ? discount : 0,
     over,
     url: pageUrl,
   });
@@ -235,6 +240,11 @@ function CalcApp({ locale, search, live }: { locale: Locale; search: URLSearchPa
 
   // Нижняя закреплённая полоса на телефоне прячется, когда блок итога на экране или уже позади.
   const [resultRef, resultVisible] = useReached<HTMLDivElement>(0.25);
+  // Полоса с ценой уехала — общая нижняя панель возвращается (и наоборот).
+  useEffect(() => {
+    setOwnSticky(!resultVisible);
+    return () => setOwnSticky(true);
+  }, [resultVisible]);
 
   // Больше 12 м модель не подбираем — в подписи только то, что человек ввёл.
   const caption = [formatMeters(st.l, locale), priced && product && !over ? product.name : typeLabel, controlLabel].join(", ");
@@ -380,6 +390,11 @@ function CalcApp({ locale, search, live }: { locale: Locale; search: URLSearchPa
               {showPrice && priceText ? priceText : <SomSign />}
               {showPrice && !priceText && <span className="sr-only">{s.byRequest}</span>}
             </p>
+            {showPrice && discount > 0 && (
+              <p className="tnum mt-2 text-[15px] text-accent">
+                {os(locale).msg.discount}: −{formatNumber(discount)} сом
+              </p>
+            )}
             {showPrice && unit != null && st.w > 1 && <p className="t-data mt-2">{s.perWindow(`${formatNumber(unit)} сом`)}</p>}
             {showPrice && product && (
               // Резюме выбора чипами (ТЗ, раздел 16): видно, за что эта цена.
@@ -392,11 +407,12 @@ function CalcApp({ locale, search, live }: { locale: Locale; search: URLSearchPa
             <ul className="mt-4 space-y-1.5 text-[14px] leading-snug text-ink-2">
               {!showPrice && <li>{over ? s.overNote : s.byRequestNote}</li>}
               {showPrice && st.rg !== 4 && <li>{s.notes.install}</li>}
-              {showPrice && st.rg > 0 && st.rg < 4 && <li>{s.notes.outOfTown}</li>}
+              {showPrice && st.rg > 0 && st.rg < 4 && <li>{s.notes.outOfTown[st.rg - 1]}</li>}
               {showPrice && st.rg === 4 && <li>{s.notes.delivery}</li>}
               {showPrice && st.sh > 0 && <li>{s.notes.shape}</li>}
               {showPrice && <li>{s.notes.measure}</li>}
               {showPrice && <li>{s.notes.power}</li>}
+              {showPrice && discount === 0 && <li>{s.notes.discount}</li>}
             </ul>
 
             <div className="mt-6 grid gap-2">
@@ -437,8 +453,8 @@ function CalcApp({ locale, search, live }: { locale: Locale; search: URLSearchPa
         </div>
       </div>
 
-      {/* Телефон: цена и главное действие под пальцем, пока не дошли до итога (общая нижняя панель здесь скрыта).
-          Отступа-«подкладки» нет: у итога и ниже панели уже нет. */}
+      {/* Телефон: цена и главное действие под пальцем, пока не дошли до итога. Дальше полоса уезжает,
+          и вместо неё появляется общая нижняя панель (у неё своя «подкладка» под подвалом). */}
       <div
         className={cn(
           "fixed inset-x-0 bottom-0 z-40 flex items-center gap-3 border-t border-line bg-paper/95 px-4 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] backdrop-blur transition-transform duration-300 motion-reduce:transition-none md:hidden",

@@ -8,7 +8,7 @@ import { Price } from "@/components/price";
 import { brands } from "@/content/brands";
 import { useCart, type CartItem } from "@/lib/cart";
 import { useCartSync } from "@/lib/cart-sync";
-import { PRICING } from "@/lib/pricing";
+import { DISCOUNT, PRICING } from "@/lib/pricing";
 import { formatNumber } from "@/lib/format";
 import { configSummary, type KitConfigX } from "@/lib/order-message";
 import { href, tr, type Locale } from "@/i18n";
@@ -36,7 +36,7 @@ export function recalcHref(locale: Locale, item: CartItem) {
 export function CartView({ locale }: { locale: Locale }) {
   const s = os(locale).cart;
   const mounted = useMounted();
-  const { items, total, hasUnknown, setQty, remove } = useCart();
+  const { items, subtotal, discount, total, cornices, hasUnknown, setQty, remove } = useCart();
   const [checkoutRef, checkoutVisible] = useReached<HTMLAnchorElement>();
   useCartSync(items, mounted);
 
@@ -86,6 +86,18 @@ export function CartView({ locale }: { locale: Locale }) {
             </p>
             {hasUnknown && <p className="mt-2 text-[14px] text-ink-2">{total > 0 ? s.unknownExtra : s.unknownOnly}</p>}
             <dl className="mt-5 grid gap-2 border-t border-line pt-4 text-[14px] leading-snug">
+              {discount > 0 && (
+                <>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink-2">{s.subtotal}</dt>
+                    <dd className="tnum text-right">{formatNumber(subtotal)} сом</dd>
+                  </div>
+                  <div className="flex justify-between gap-4 text-accent">
+                    <dt>{s.discount}</dt>
+                    <dd className="tnum text-right">−{formatNumber(discount)} сом</dd>
+                  </div>
+                </>
+              )}
               {hasInstall && (
                 <div className="flex justify-between gap-4">
                   <dt className="text-ink-2">{s.install}</dt>
@@ -97,6 +109,10 @@ export function CartView({ locale }: { locale: Locale }) {
                 <dd className="text-right">{s.deliveryValue}</dd>
               </div>
             </dl>
+            {/* Подсказка про скидку — только когда до неё 1–3 карниза: дальше она уже действует. */}
+            {cornices > 0 && cornices < DISCOUNT.minCornices && (
+              <p className="mt-4 border-l-2 border-accent pl-3 text-[14px] leading-snug">{s.discountHint(DISCOUNT.minCornices - cornices)}</p>
+            )}
             {belowMin && <p className="mt-4 border-l-2 border-error pl-3 text-[14px] text-error">{s.minOrder}</p>}
             {kitsTotal > 0 && <p className="mt-4 text-[13px] leading-snug text-ink-3">{s.measure}</p>}
             <Link ref={checkoutRef} href={href(locale, "/oformlenie/")} className="btn btn-accent mt-6 w-full">

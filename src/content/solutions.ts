@@ -85,7 +85,7 @@ const defs: Def[] = [
         ky: "Кабинет жана кеңсе: баарын бир баскыч менен ачуу",
       },
     ],
-    faq: ["price", "terms", "brand", "wifi", "power", "warranty"],
+    faq: ["price", "terms", "brand", "wifi", "power", "offline", "warranty"],
   },
   {
     slug: "skrytyy-v-nishu",
@@ -129,7 +129,7 @@ const defs: Def[] = [
         ky: "Көрүнгөн деталдары жок минималисттик интерьер",
       },
     ],
-    faq: ["price", "power", "terms", "brand", "wifi", "warranty"],
+    faq: ["price", "power", "offline", "terms", "brand", "wifi", "warranty"],
   },
   {
     slug: "erker",
@@ -166,7 +166,7 @@ const defs: Def[] = [
       { ru: "Угловое окно", ky: "Бурчтуу терезе" },
       { ru: "Окна на две стены", ky: "Эки дубалдагы терезелер" },
     ],
-    faq: ["price", "measure", "terms", "brand", "power", "warranty"],
+    faq: ["price", "measure", "terms", "brand", "power", "offline", "warranty"],
   },
   {
     slug: "dvuhryadnye",
@@ -203,7 +203,7 @@ const defs: Def[] = [
       },
       { ru: "Окна на первом этаже", ky: "Биринчи кабаттагы терезелер" },
     ],
-    faq: ["price", "wifi", "terms", "brand", "power", "warranty"],
+    faq: ["price", "wifi", "terms", "brand", "power", "offline", "warranty"],
   },
   {
     slug: "rulonnye",
@@ -406,11 +406,11 @@ const defs: Def[] = [
     slug: "obychnye-karnizy",
     group: "manual",
     priced: false,
-    title: { ru: "Обычные карнизы", ky: "Кадимки карниздер" },
-    noun: { ru: "обычный карниз", ky: "кадимки карниз" },
+    title: { ru: "Обычные карнизы", ky: "Жөнөкөй карниздер" },
+    noun: { ru: "обычный карниз", ky: "жөнөкөй карниз" },
     metaTitle: {
       ru: "Обычные карнизы для штор — Бишкек",
-      ky: "Пардалар үчүн кадимки карниздер — Бишкек",
+      ky: "Пардалар үчүн жөнөкөй карниздер — Бишкек",
     },
     short: {
       ru: "Ручной профиль без мотора — для комнат, где автоматика не нужна.",

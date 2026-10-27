@@ -2,7 +2,7 @@
 import type { Ecosystem } from "@/content/types";
 
 /** Вопросы страниц решений: id из общего src/content/faq.ts + свой «priceCalc» для типов без формулы цены. */
-export type FaqId = "price" | "priceCalc" | "wifi" | "terms" | "warranty" | "brand" | "power" | "delivery" | "payment" | "measure";
+export type FaqId = "price" | "priceCalc" | "wifi" | "terms" | "warranty" | "brand" | "power" | "offline" | "delivery" | "payment" | "measure";
 
 const ru = {
   index: {

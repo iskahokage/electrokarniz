@@ -4,6 +4,7 @@
 // без расхождения при гидрации; переживает переход в WhatsApp и обратно.
 import { useSyncExternalStore } from "react";
 import type { L } from "@/i18n";
+import { cartTotals } from "./cart-totals";
 
 export type KitConfig = {
   length: number;
@@ -101,7 +102,5 @@ export function kitId(slug: string, c: KitConfig) {
 export function useCart() {
   const items = useSyncExternalStore(subscribe, read, () => EMPTY);
   const count = items.reduce((s, i) => s + i.qty, 0);
-  const total = items.reduce((s, i) => s + (i.unitPrice ?? 0) * i.qty, 0);
-  const hasUnknown = items.some((i) => i.unitPrice == null);
-  return { items, count, total, hasUnknown, ...cart };
+  return { items, count, ...cartTotals(items), ...cart };
 }

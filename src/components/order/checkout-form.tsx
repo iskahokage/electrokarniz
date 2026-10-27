@@ -207,7 +207,7 @@ function Form({
     phoneRef.current?.focus();
   };
 
-  const { total, hasUnknown } = cartTotals(items);
+  const { total, discount, hasUnknown } = cartTotals(items);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -281,6 +281,7 @@ function Form({
         locale={locale}
         items={items}
         total={total}
+        discount={discount}
         hasUnknown={hasUnknown}
         className="md:order-2 md:col-span-5 lg:col-span-4 lg:col-start-9"
       />
@@ -574,12 +575,14 @@ function OrderSummary({
   locale,
   items,
   total,
+  discount,
   hasUnknown,
   className,
 }: {
   locale: Locale;
   items: CartItem[];
   total: number;
+  discount: number;
   hasUnknown: boolean;
   className?: string;
 }) {
@@ -603,6 +606,11 @@ function OrderSummary({
                 <Price value={null} locale={locale} />
               )}
             </p>
+            {discount > 0 && (
+              <p className="tnum text-[13px] text-accent">
+                {c.discount}: −{formatNumber(discount)} сом
+              </p>
+            )}
             {hasUnknown && (
               <p className="text-[13px] text-ink-2">
                 {total > 0 ? c.unknownExtra : c.unknownOnly}

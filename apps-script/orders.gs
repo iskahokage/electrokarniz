@@ -16,6 +16,7 @@ var HEADERS = [
   "Дата", "Номер", "Тип", "Имя", "Телефон", "Способ получения", "Город", "Адрес",
   "Позиции", "Итого, сом", "Есть цены по запросу", "Оплата", "Комментарий", "Язык", "Страница",
   "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "Referrer", "Первая страница",
+  "Скидка, сом",
 ];
 
 var METHODS = {
@@ -155,6 +156,7 @@ function toRow(b, number) {
     clean(utm.utm_term),
     clean(b.referrer),
     clean(utm.landing), // с какой страницы начался визит — пишет analytics.tsx вместе с UTM
+    Number(b.discount) || 0, // скидка от 4 карнизов; «Итого» — уже со скидкой
   ];
 }
 
@@ -170,6 +172,7 @@ function emailText(b, number) {
     "",
     itemsText(b.items),
     "",
+    Number(b.discount) ? "Сумма: " + (Number(b.subtotal) || 0) + " сом\nСкидка 10 % (от 4 карнизов): −" + Number(b.discount) + " сом" : "",
     "Итого: " + (Number(b.total) || 0) + " сом" + (b.hasUnknown ? " + позиции с ценой по запросу" : ""),
     b.comment ? "\nКомментарий: " + txt(b.comment) : "",
     "",

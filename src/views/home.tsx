@@ -95,7 +95,7 @@ function Facts({ locale }: { locale: Locale }) {
   return (
     <section aria-label={s.label} className={cn(wrap, "mt-12 md:mt-28")}>
       <Reveal>
-        {/* В три колонки — только с lg: «13 000 сомдон» не помещается в треть планшетной ширины. */}
+        {/* В три колонки — только с lg: «12 000 сомдон» не помещается в треть планшетной ширины. */}
         <dl className="grid border-y border-ink lg:grid-cols-3">
           {items.map(([big, small], i) => (
             <div

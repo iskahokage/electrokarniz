@@ -34,6 +34,8 @@ export type OrderPayload = OrderForm & {
   referrer: string;
   utm: Utm;
   items: { slug: string; title: string; config: string; qty: number; unit?: "m"; unitPrice: number | null; lineTotal: number | null }[];
+  subtotal: number;
+  discount: number;
   total: number;
   hasUnknown: boolean;
   elapsedMs: number;
@@ -41,7 +43,7 @@ export type OrderPayload = OrderForm & {
 };
 
 export function buildPayload(form: OrderForm, items: CartItem[], locale: Locale, elapsedMs: number, hp: string): OrderPayload {
-  const { total, hasUnknown } = cartTotals(items);
+  const { subtotal, discount, total, hasUnknown } = cartTotals(items);
   const utm = readUtm();
   return {
     ...form,
@@ -59,6 +61,8 @@ export function buildPayload(form: OrderForm, items: CartItem[], locale: Locale,
       unitPrice: i.unitPrice,
       lineTotal: i.unitPrice == null ? null : i.unitPrice * i.qty,
     })),
+    subtotal,
+    discount,
     total,
     hasUnknown,
     elapsedMs: Math.round(elapsedMs),
