@@ -1,0 +1,128 @@
+// Объекты. ВРЕМЕННО: все демо (demo: true) — чужие фото и примерные параметры, пока владелец не пришлёт свои (~20 объектов).
+// Районы реальные, но объекты в них не наши: поэтому без ЖК и улиц, и на странице видна пометка «демо».
+// images — по порядку: первое найденное в public/media/manifest.json (obj-N — если появятся отобранные фото).
+// product — slug из каталога; если товара в каталоге нет, страница покажет объект без ссылки на модель.
+import type { Project } from "./types";
+
+// Демо-объекты в production не попадают (ТЗ, раздел 21): чужие фото нельзя выдавать за наши работы.
+// NEXT_PUBLIC_SHOW_DEMO=1 — временно показать их и в production (решение владельца, не по умолчанию).
+const hideDemo = process.env.NEXT_PUBLIC_SITE_ENV === "production" && !["1", "true", "yes"].includes((process.env.NEXT_PUBLIC_SHOW_DEMO || "").toLowerCase());
+
+const all: Project[] = [
+  {
+    slug: "gostinaya-dzhal",
+    title: { ru: "Гостиная на Джале", ky: "Жалдагы конок бөлмө" },
+    room: { ru: "Гостиная", ky: "Конок бөлмө" },
+    district: { ru: "Джал, Бишкек", ky: "Жал, Бишкек" },
+    length: 4.1,
+    product: "dooya-dt82tv",
+    mount: "ceiling",
+    opening: "center",
+    control: "alice",
+    days: 1,
+    images: ["obj-1", "living-grey"],
+    demo: true,
+  },
+  {
+    slug: "spalnya-asanbay",
+    title: { ru: "Спальня в Асанбае", ky: "Асанбайдагы уктоочу бөлмө" },
+    room: { ru: "Спальня", ky: "Уктоочу бөлмө" },
+    district: { ru: "Асанбай, Бишкек", ky: "Асанбай, Бишкек" },
+    length: 3,
+    product: "novo-n21-wifi",
+    mount: "ceiling",
+    opening: "center",
+    control: "app",
+    days: 1,
+    images: ["obj-2", "hero-bedroom"],
+    demo: true,
+  },
+  {
+    slug: "gostinaya-tunguch",
+    title: { ru: "Гостиная с тюлем в Тунгуче", ky: "Түңгүчтөгү тюлдүү конок бөлмө" },
+    room: { ru: "Гостиная", ky: "Конок бөлмө" },
+    district: { ru: "Тунгуч, Бишкек", ky: "Түңгүч, Бишкек" },
+    length: 3.6,
+    product: "novo-n21-wifi",
+    mount: "niche",
+    opening: "center",
+    control: "alice",
+    days: 1,
+    images: ["obj-3", "living-sheer"],
+    demo: true,
+  },
+  {
+    slug: "kuhnya-vostok-5",
+    title: { ru: "Кухня в Востоке-5", ky: "Восток-5теги ашкана" },
+    room: { ru: "Кухня", ky: "Ашкана" },
+    district: { ru: "Восток-5, Бишкек", ky: "Восток-5, Бишкек" },
+    length: 2.4,
+    product: "novo-mini",
+    mount: "wall",
+    opening: "side",
+    control: "remote",
+    days: 1,
+    images: ["obj-4", "kitchen-sheer"],
+    demo: true,
+  },
+  {
+    slug: "dom-koy-tash",
+    title: { ru: "Дом в Кой-Таше", ky: "Кой-Таштагы үй" },
+    room: { ru: "Гостиная в доме", ky: "Үйдөгү конок бөлмө" },
+    district: { ru: "Кой-Таш, Чуйская область", ky: "Кой-Таш, Чүй облусу" },
+    length: 6.2,
+    product: "dooya-dt82tv",
+    mount: "ceiling",
+    opening: "center",
+    control: "alice",
+    days: 1,
+    images: ["obj-5", "living-wide"],
+    demo: true,
+  },
+  {
+    slug: "spalnya-kok-zhar",
+    title: { ru: "Спальня в Кок-Жаре", ky: "Көк-Жардагы уктоочу бөлмө" },
+    room: { ru: "Спальня", ky: "Уктоочу бөлмө" },
+    district: { ru: "Кок-Жар, Бишкек", ky: "Көк-Жар, Бишкек" },
+    length: 2.8,
+    product: "novo-n21-wifi",
+    mount: "ceiling",
+    opening: "side",
+    control: "remote",
+    days: 1,
+    images: ["obj-6", "bedroom-grey"],
+    demo: true,
+  },
+  {
+    slug: "detskaya-ortosay",
+    title: { ru: "Детская в Ортосае", ky: "Ортосайдагы балдар бөлмөсү" },
+    room: { ru: "Детская", ky: "Балдар бөлмөсү" },
+    district: { ru: "Ортосай, Бишкек", ky: "Ортосай, Бишкек" },
+    length: 2.6,
+    product: "novo-n21-wifi",
+    mount: "wall",
+    opening: "side",
+    control: "app",
+    days: 1,
+    images: ["obj-7", "bedroom-white"],
+    demo: true,
+  },
+  {
+    slug: "gostinaya-alamedin",
+    title: { ru: "Гостиная в Аламедине-1", ky: "Аламедин-1деги конок бөлмө" },
+    room: { ru: "Гостиная", ky: "Конок бөлмө" },
+    district: { ru: "Аламедин-1, Бишкек", ky: "Аламедин-1, Бишкек" },
+    length: 4.8,
+    product: "dooya-dt82te",
+    mount: "ceiling",
+    opening: "center",
+    control: "switch",
+    days: 1,
+    images: ["obj-8", "living-classic"],
+    demo: true,
+  },
+];
+
+export const projects: Project[] = hideDemo ? all.filter((p) => !p.demo) : all;
+
+export const projectBySlug = (slug: string) => projects.find((p) => p.slug === slug);

@@ -1,26 +1,194 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Дизайн-система «Электрокарниз» — направление C (движение) с типографикой A и схемой окна B.
+   Светлая тема (решение владельца 27.10). Углы 0, линии 1 px, один акцент — бутылочный зелёный:
+   не синий, как у конкурента, и рядом с WhatsApp читается естественно. */
+@theme {
+  --color-paper: #f5f2ec;
+  --color-paper-2: #ebe6dd;
+  --color-paper-3: #e1dbd0;
+  --color-ink: #171512;
+  --color-ink-2: #5f5b55;
+  --color-ink-3: #6a655e; /* 5.2:1 на paper, 4.65:1 на paper-2 — мелкие подписи проходят WCAG AA */
+  --color-line: #d9d2c6;
+  --color-accent: #2d5a43;
+  --color-accent-2: #234836;
+  --color-accent-ink: #ffffff;
+  --color-fabric: #ece6da;
+  --color-error: #a3321f;
+
+  --font-display: var(--font-display-x), system-ui, sans-serif;
+  --font-sans: var(--font-display-x), system-ui, sans-serif;
+  --font-mono: var(--font-mono-x), ui-monospace, monospace;
+
+  --radius-none: 0;
+  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-motor: cubic-bezier(0.45, 0.05, 0.25, 1);
+
+  --breakpoint-xs: 360px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 4.5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Типографическая шкала: узкий гротеск, отрицательный трекинг на крупных кеглях.
+   balance — чтобы в заголовке не оставалось одно слово на строке (особенно в кыргызском). */
+@utility t-display {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 1.4rem + 6vw, 7.25rem);
+  line-height: 0.93;
+  letter-spacing: -0.045em;
+}
+@utility t-h1 {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.25rem, 1.5rem + 3.6vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+@utility t-h2 {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 1.3rem + 2.6vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+@utility t-h3 {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+@utility t-lead {
+  text-wrap: pretty;
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  line-height: 1.4;
+  color: var(--color-ink-2);
+}
+/* Подписи-данные: моноширинный «голос» для метров, моделей, сроков. */
+@utility t-data {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: var(--color-ink-2);
+}
+
+/* Кнопки: прямоугольные, высота от 44 px. */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.25rem;
+  padding-inline: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  transition:
+    background-color 200ms,
+    color 200ms,
+    border-color 200ms;
+}
+@utility btn-accent {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  &:hover {
+    background: var(--color-accent-2);
+  }
+}
+@utility btn-ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  &:hover {
+    background: #000;
+  }
+}
+@utility btn-line {
+  border: 1px solid var(--color-ink);
+  &:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+}
+
+/* Рельс карниза — слайдер длины. */
+.rail::-webkit-slider-runnable-track {
+  height: 2px;
+  background: currentColor;
+}
+.rail::-moz-range-track {
+  height: 2px;
+  background: currentColor;
+}
+.rail::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 20px;
+  margin-top: -9px;
+  background: var(--color-accent);
+  border: 0;
+  border-radius: 0;
+}
+.rail::-moz-range-thumb {
+  width: 28px;
+  height: 20px;
+  background: var(--color-accent);
+  border: 0;
+  border-radius: 0;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Схема окна: штора закрывается, стоит, открывается. --s0 — масштаб собранной шторы. */
+@keyframes ws-close {
+  0%, 12% { transform: scaleX(var(--s0)); }
+  42%, 62% { transform: scaleX(1); }
+  92%, 100% { transform: scaleX(var(--s0)); }
+}
+.ws-panel {
+  animation: ws-close 7s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ws-panel {
+    animation: none;
+  }
 }

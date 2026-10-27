@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# исходники демо-фото и материалы владельца не коммитим
+/content-inbox-demo/
+/out/
+!.env.example

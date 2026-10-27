@@ -1,0 +1,428 @@
+{
+  "bedroom-grey": {
+    "width": 2000,
+    "height": 2000,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "bedroom-white": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "hero-bedroom": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "kitchen-sheer": {
+    "width": 2000,
+    "height": 1334,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "living-classic": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "living-grey": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "living-plants": {
+    "width": 2000,
+    "height": 2000,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "living-sheer": {
+    "width": 2000,
+    "height": 3000,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "living-wide": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "living-window": {
+    "width": 2000,
+    "height": 1500,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "obj-1": {
+    "width": 2000,
+    "height": 2667,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "obj-2": {
+    "width": 2000,
+    "height": 3017,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "obj-3": {
+    "width": 2000,
+    "height": 1125,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "obj-4": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "obj-5": {
+    "width": 2000,
+    "height": 3017,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "obj-6": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "obj-7": {
+    "width": 2000,
+    "height": 3020,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "obj-8": {
+    "width": 2000,
+    "height": 1700,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-begunki-1": {
+    "width": 1000,
+    "height": 1000,
+    "widths": [
+      640
+    ]
+  },
+  "product-karetki-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-karniz-ruchnoy-1": {
+    "width": 2000,
+    "height": 2000,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-lift-motor-45-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-lift-sistema-1": {
+    "width": 1000,
+    "height": 1000,
+    "widths": [
+      640
+    ]
+  },
+  "product-lift-sistema-2": {
+    "width": 994,
+    "height": 1002,
+    "widths": [
+      640
+    ]
+  },
+  "product-motor-dooya-dt52e-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-motor-dooya-dt82te-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-motor-dooya-dt82tv-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-motor-novo-mini-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-motor-novo-n21-wifi-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-nastennyy-pult-novo-a9-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-povoroty-erker-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-profil-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-pult-dooya-dc1660-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-pult-dooya-dc1662-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-pult-dooya-dc2160-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-pult-novo-a13-6-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-pult-novo-a6-9-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "product-vyklyuchatel-dooya-dc398c-1": {
+    "width": 1600,
+    "height": 1600,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-dvuhryadnye": {
+    "width": 2000,
+    "height": 2000,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-erker": {
+    "width": 2000,
+    "height": 1578,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-lift-sistemy": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-obychnye-karnizy": {
+    "width": 2000,
+    "height": 2000,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-pryamye": {
+    "width": 2000,
+    "height": 3555,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-rimskie": {
+    "width": 2000,
+    "height": 3000,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-rulonnye": {
+    "width": 2000,
+    "height": 2801,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-skrytyy-v-nishu": {
+    "width": 2000,
+    "height": 3380,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-ulichnye": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  },
+  "sol-zhalyuzi-i-plisse": {
+    "width": 2000,
+    "height": 1500,
+    "widths": [
+      640,
+      1080,
+      1600
+    ]
+  }
+}
